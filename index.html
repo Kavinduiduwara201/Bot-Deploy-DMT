@@ -1,199 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>ShadowX Bot Deploy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
-
     html, body {
       height: 100%;
-      background: #0d0d0d;
       font-family: 'Segoe UI', sans-serif;
+      scroll-behavior: smooth;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       color: #fff;
+    }
+
+    section {
+      height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding: 30px 20px;
       text-align: center;
-      overflow: hidden;
+      animation: fadeIn 1.5s ease-in;
     }
 
-    .container {
-      width: 100%;
-      max-width: 500px;
-      padding: 20px;
-      z-index: 10;
-      position: relative;
-    }
-
-    .card {
-      background: #1f1f1f;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 0 30px rgba(0,0,0,0.5);
-      position: relative;
-      z-index: 10;
-    }
-
-    h1 {
-      color: #25d366;
+    h1, h2 {
       margin-bottom: 20px;
-      font-size: 28px;
+      text-shadow: 0 0 15px #00ffc3;
+      animation: slideDown 1s ease;
     }
 
-    input, button {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 10px;
+    .btn {
+      padding: 12px 28px;
+      font-size: 1rem;
       border: none;
-      font-size: 16px;
+      border-radius: 25px;
+      background: #00ffc3;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 20px #00ffc3;
+      transition: transform 0.2s ease;
+      margin-top: 10px;
+      animation: pulse 2s infinite;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    form {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 25px rgba(0, 255, 200, 0.2);
+      animation: fadeInUp 1.5s ease;
+    }
+
+    input, button, textarea {
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
     }
 
     button {
-      background-color: #25d366;
-      color: white;
+      background: #00ffc3;
+      color: #000;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.3s;
     }
 
-    button:hover {
-      background-color: #1ebc5e;
-    }
-
-    img.qr {
-      width: 180px;
-      margin: 20px auto;
-      display: block;
-      border-radius: 12px;
-    }
-
-    #status {
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
-    label {
-      display: block;
-      margin: 10px 0 5px;
-      font-weight: 500;
-    }
-
-    p.notice {
+    .notice {
       color: #f9c74f;
-      margin-top: 15px;
-      font-size: 15px;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      animation: fadeIn 2s ease;
     }
 
-    .pricing {
-      background: #272727;
-      border-radius: 12px;
-      padding: 15px;
-      margin: 20px 0;
-      font-size: 16px;
-      line-height: 1.5;
-      text-align: left;
-    }
-
-    .pricing strong {
-      color: #25d366;
-    }
-
-    @media (max-width: 600px) {
-      .card {
-        padding: 20px;
-      }
-      h1 {
-        font-size: 22px;
-      }
-    }
-
-    #playButton {
-      background-color: #3498db;
+    audio {
       margin-top: 20px;
+      animation: fadeIn 2s ease;
     }
 
+    /* Animations */
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes slideDown {
+      0% {transform: translateY(-40px); opacity: 0;}
+      100% {transform: translateY(0); opacity: 1;}
+    }
+
+    @keyframes fadeInUp {
+      0% {transform: translateY(40px); opacity: 0;}
+      100% {transform: translateY(0); opacity: 1;}
+    }
+
+    @keyframes pulse {
+      0% {box-shadow: 0 0 10px #00ffc3;}
+      50% {box-shadow: 0 0 30px #00ffc3;}
+      100% {box-shadow: 0 0 10px #00ffc3;}
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <h1>🛒 ShadowX Bot Deploy</h1>
-      <p>Fill in your details & pay via Ezcash or Reload to deploy your bot.</p>
 
-      <div class="pricing">
-        <strong>Payment Methods:</strong> Ezcash and Reload<br />
-        <strong>Prices:</strong><br />
-        - 1 Month: 200<br />
-        - 1 Week: 100
-      </div>
+<!-- Section 1 -->
+<section>
+  <h1>🔥 ShadowX Bot Deploy</h1>
+  <p>Deploy Your WhatsApp Bot Instantly!</p>
+  <a href="#form"><button class="btn">Buy Now</button></a>
+</section>
 
-      <input type="text" id="name" placeholder="Your Name" required />
-      <input type="text" id="whatsapp" placeholder="WhatsApp Number" required />
-      <input type="text" id="botName" placeholder="Bot Name" required />
-      <input type="text" id="seasonId" placeholder="Season ID" required />
+<!-- Section 2: Form -->
+<section id="form">
+  <h2>📝 Buy Your Bot</h2>
+  <form id="botForm">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="text" name="number" placeholder="WhatsApp Number" required>
+    <input type="text" name="botname" placeholder="Bot Name" required>
+    <input type="text" name="season" placeholder="Season ID" required>
+    <input type="file" name="screenshot" accept="image/*" required>
+    <button type="submit">Submit</button>
 
-      <h3 style="margin-top: 20px;">📲 Pay with Ezcash or Reload</h3>
-      <img src="https://files.catbox.moe/w6mn4x.png" alt="Ezcash QR" class="qr" />
-      <p><strong>Payment Number:</strong> <span style="color:#25d366;">077 005 1298</span></p>
+    <p class="notice">⏱ Bot will deploy within <strong>4 hours</strong> after payment.</p>
+    <p class="notice">💳 Payment: EzCash / Reload</p>
+    <p class="notice">💰 1 Month = Rs.200 | 1 Week = Rs.100</p>
+    <p class="notice">📞 Contact: 077 005 1298</p>
+  </form>
+</section>
 
-      <p class="notice">
-        ⚠️ <strong>Notice:</strong> Your bot will be deployed within <strong>4 hours</strong> after we receive and accept your payment information.
-      </p>
+<!-- Section 3: Audio -->
+<section>
+  <h2>🎵 Enjoy Music</h2>
+  <audio id="song" controls>
+    <source src="https://files.catbox.moe/3rtan4.mp3" type="audio/mp3">
+    Your browser does not support the audio tag.
+  </audio>
+</section>
 
-      <label>🖼️ Upload Payment Screenshot:</label>
-      <input type="file" id="screenshot" accept="image/*" />
+<!-- Telegram Bot Form Sender Script -->
+<script>
+  const form = document.getElementById("botForm");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      <button onclick="sendToTelegram()">Buy Now</button>
-      <p id="status"></p>
+    const token = "7610643784:AAFgZkCYjMsKXku218wyi9l2cAAxMq1v4po";
+    const chatId = "1720283336";
 
-      <!-- 🎵 Play song button -->
-      <button id="playButton" onclick="document.getElementById('song').play()">▶️ Play Song</button>
-      <audio id="song" src="https://files.catbox.moe/3rtan4.mp3"></audio>
-    </div>
-  </div>
+    const formData = new FormData(form);
+    const caption = `
+🛒 New Bot Order
+👤 Name: ${formData.get("name")}
+📞 Number: ${formData.get("number")}
+🤖 Bot: ${formData.get("botname")}
+🆔 Season: ${formData.get("season")}
+`;
 
-  <script>
-    async function sendToTelegram() {
-      const name = document.getElementById('name').value.trim();
-      const whatsapp = document.getElementById('whatsapp').value.trim();
-      const botName = document.getElementById('botName').value.trim();
-      const seasonId = document.getElementById('seasonId').value.trim();
-      const screenshot = document.getElementById('screenshot').files[0];
+    formData.append("chat_id", chatId);
+    formData.append("caption", caption);
+    formData.append("photo", formData.get("screenshot"));
 
-      if (!name || !whatsapp || !botName || !seasonId || !screenshot) {
-        document.getElementById('status').innerText = "❌ All fields & screenshot are required!";
-        return;
-      }
+    await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
+      method: "POST",
+      body: formData
+    });
 
-      const formData = new FormData();
-      formData.append("chat_id", "1720283336");
-      formData.append("caption", `📥 *New ShadowX Bot Order with Payment* \n\n👤 *Name:* ${name}\n📱 *WhatsApp:* ${whatsapp}\n🤖 *Bot Name:* ${botName}\n🆔 *Season ID:* ${seasonId}\n💳 *Paid via Ezcash or Reload*\n📞 *Number:* 077 005 1298`);
-      formData.append("photo", screenshot);
-      formData.append("parse_mode", "Markdown");
+    alert("✅ Order Sent! Bot will be deployed in 4 hours.");
+    form.reset();
+  });
+</script>
 
-      try {
-        const botToken = '7610643784:AAFgZkCYjMsKXku218wyi9l2cAAxMq1v4po';
-        const response = await fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
-          method: "POST",
-          body: formData
-        });
-
-        if (response.ok) {
-          document.getElementById('status').innerText = "✅ Request sent successfully!";
-        } else {
-          document.getElementById('status').innerText = "⚠️ Failed to send. Try again.";
-        }
-      } catch (err) {
-        document.getElementById('status').innerText = "❌ Error sending request!";
-      }
-    }
-  </script>
 </body>
-</html>
+  </html>

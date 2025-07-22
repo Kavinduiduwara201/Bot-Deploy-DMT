@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>ShadowX Bot Deploy</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* Base Styling */
     * {
       margin: 0;
       padding: 0;
@@ -18,23 +17,44 @@
       scroll-behavior: smooth;
       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       color: #fff;
-    }
-
-    section {
-      min-height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 30px 20px;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 25px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 40px rgba(0, 255, 200, 0.3);
+      padding: 30px 25px;
       text-align: center;
       animation: fadeIn 1.5s ease-in;
     }
 
-    h1, h2 {
-      margin-bottom: 20px;
+    /* Panels */
+    #panel1, #panel2 {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeInUp 1s ease forwards;
+    }
+    #panel1.active, #panel2.active {
+      display: flex;
+    }
+
+    h1 {
+      margin-bottom: 12px;
+      font-size: 2.2rem;
       text-shadow: 0 0 15px #00ffc3;
-      animation: slideDown 1s ease;
+    }
+    p.intro {
+      font-size: 1.1rem;
+      margin-bottom: 25px;
     }
 
     .btn {
@@ -48,119 +68,99 @@
       cursor: pointer;
       box-shadow: 0 0 20px #00ffc3;
       transition: transform 0.2s ease;
-      margin-top: 10px;
       animation: pulse 2s infinite;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 20px;
     }
-
-    .btn:hover {
+    .btn:hover:not(:disabled) {
       transform: scale(1.05);
     }
 
-    form {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+    .dev-names {
+      font-weight: bold;
+      color: #0077ff;
+      background: #fff;
+      padding: 6px 14px;
       border-radius: 20px;
-      backdrop-filter: blur(12px);
-      padding: 20px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 0 25px rgba(0, 255, 200, 0.2);
-      animation: fadeInUp 1.5s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 12px;
+      display: inline-block;
+      user-select: none;
     }
 
-    input, button, textarea {
+    .small-notice {
+      font-size: 0.85rem;
+      color: #f9c74f;
+      max-width: 320px;
+      line-height: 1.3;
+      margin-top: 8px;
+      user-select: none;
+    }
+
+    form {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    input, select, button {
       width: 100%;
       margin: 10px 0;
       padding: 12px;
       border-radius: 12px;
       border: none;
+      font-size: 1rem;
+      box-sizing: border-box;
     }
 
-    button {
+    button[type="submit"] {
       background: #00ffc3;
       color: #000;
       font-weight: bold;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 0 20px #00ffc3;
+      animation: pulse 2s infinite;
+      margin-top: 5px;
+    }
+    button[type="submit"]:disabled {
+      background-color: #66e6cc;
+      cursor: not-allowed;
+      box-shadow: none;
+      animation: none;
     }
 
-    .notice {
+    a.buy-key-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 12px 28px;
+      border-radius: 25px;
+      background: #00ffc3;
+      color: #000;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 20px #00ffc3;
+      transition: transform 0.2s ease;
+    }
+    a.buy-key-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .notice-text {
       color: #f9c74f;
       font-size: 0.9rem;
       margin-top: 10px;
-      animation: fadeIn 2s ease;
+      user-select: none;
     }
 
-    audio {
-      margin-top: 20px;
-      animation: fadeIn 2s ease;
-    }
-
-    /* 🎨 Important Notice Styling */
-    .important-notice {
-      background: linear-gradient(90deg, #ff9a9e, #fad0c4, #fad0c4);
-      padding: 30px 20px;
-      text-align: center;
-      color: #1f1f1f;
-      font-family: 'Segoe UI', sans-serif;
-      animation: fadeSlideIn 1.5s ease-out;
-      box-shadow: 0 5px 20px rgba(255, 105, 135, 0.4);
-      border-radius: 0 0 25px 25px;
-    }
-
-    .notice-container h2 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-      color: #800080;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-    }
-
-    .notice-container ul {
-      list-style: none;
-      padding: 0;
-      margin: 10px 0 15px;
-      font-size: 1.1rem;
-    }
-
-    .notice-container li {
-      margin: 6px 0;
-    }
-
-    .dev-name {
-      font-weight: bold;
-      color: #0077ff;
-      background: #fff;
-      padding: 4px 10px;
-      border-radius: 15px;
-      display: inline-block;
-      margin: 0 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    /* Animations */
     @keyframes fadeIn {
       from {opacity: 0;}
       to {opacity: 1;}
     }
 
-    @keyframes slideDown {
-      0% {transform: translateY(-40px); opacity: 0;}
-      100% {transform: translateY(0); opacity: 1;}
-    }
-
     @keyframes fadeInUp {
-      0% {transform: translateY(40px); opacity: 0;}
-      100% {transform: translateY(0); opacity: 1;}
-    }
-
-    @keyframes fadeSlideIn {
-      0% {
-        transform: translateY(-100%);
-        opacity: 0;
-      }
-      100% {
-        transform: translateY(0%);
-        opacity: 1;
-      }
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
     }
 
     @keyframes pulse {
@@ -172,58 +172,123 @@
 </head>
 <body>
 
-  <!-- 🌟 Important Notice -->
-  <div class="important-notice">
-    <div class="notice-container">
-      <h2>📢 Important Notice</h2>
-      <p><strong>🛠 Site Maintenance Times:</strong></p>
-      <ul>
-        <li>🔧 <b>Friday</b>: 7:00 PM – 12:00 AM</li>
-        <li>🔧 <b>Monday</b>: 9:00 AM – 1:00 PM</li>
-      </ul>
-      <p>👨‍💻 <strong>Developers:</strong> <span class="dev-name">Kavindu Iduwara</span> & <span class="dev-name">Ishan Nimsara</span></p>
+  <div class="container">
+
+    <!-- Panel 1: Intro + Developers + Notice + Button -->
+    <div id="panel1" class="active">
+      <h1>🔥 ShadowX Bot Deploy</h1>
+      <p class="intro">Deploy Your WhatsApp Bot Instantly!</p>
+
+      <div class="dev-names">👨‍💻 Developers: Kavindu Iduwara &amp; Ishan Nimsara</div>
+
+      <p class="small-notice">
+        ⚠️ Avoid sharing this to anyone. If so, your bot decline is refused.<br />
+        🚫 මෙය කිසිවෙකුටත් Share කිරිමෙන් වළකින්න. එසේ වුණොත් ඔබගේ Bot Deploy කිරීම ප්‍රතික්ෂේප කරණු ලබයි.
+      </p>
+
+      <button class="btn" id="goDeployBtn">Let's Go to Deploy</button>
     </div>
+
+    <!-- Panel 2: Form -->
+    <div id="panel2">
+      <h2>📝 Buy Your Bot</h2>
+      <form id="botForm">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="text" name="number" placeholder="WhatsApp Number" required />
+
+        <select name="botname" required>
+          <option value="" disabled selected>Select Bot Name</option>
+          <option value="ASITHA-MD">ASITHA-MD</option>
+          <option value="Queen Rashu-MD">Queen Rashu-MD</option>
+          <option value="SULA-MD">SULA-MD</option>
+          <option disabled>Up Coming Another Bots</option>
+        </select>
+
+        <select name="plan" required>
+          <option value="" disabled selected>Select Plan</option>
+          <option value="1 Month - Rs.150">1 Month - Rs.150</option>
+          <option value="1 Week - Rs.100">1 Week - Rs.100</option>
+        </select>
+
+        <input type="text" name="premiumKey" placeholder="Enter Premium Key" required />
+        <input type="text" name="season" placeholder="Season ID" required />
+        <button type="submit">Submit</button>
+
+        <p class="notice-text">⏱ Bot will deploy within <strong>4 hours</strong> after payment.</p>
+        <p class="notice-text">💳 Payment: EzCash / Reload</p>
+          <a href="https://wa.me/+94764040298?text=Want Premium Key" target="_blank" rel="noopener" class="buy-key-btn">Buy Premium Key</a>
+        <p class="notice-text">📞 Contact: 077 005 1298</p>
+      </form>
+    </div>
+
   </div>
 
-  <!-- Section 1 -->
-  <section>
-    <h1>🔥 ShadowX Bot Deploy</h1>
-    <p>Deploy Your WhatsApp Bot Instantly!</p>
-    <a href="#form"><button class="btn">Let's Go to Deploy</button></a>
-  </section>
+  <!-- Hidden autoplay music -->
+  <audio id="song" autoplay loop muted>
+    <source src="https://files.catbox.moe/vo0m8a.mp3" type="audio/mp3" />
+  </audio>
 
-  <!-- Section 2: Form -->
-  <section id="form">
-    <h2>📝 Buy Your Bot</h2>
-    <form id="botForm">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="text" name="number" placeholder="WhatsApp Number" required>
-      <input type="text" name="botname" placeholder="Bot Name" required>
-      <input type="text" name="season" placeholder="Season ID" required>
-      <input type="file" name="screenshot" accept="image/*" required>
-      <button type="submit">Submit</button>
-      <p class="notice">⏱ Bot will deploy within <strong>4 hours</strong> after payment.</p>
-      <p class="notice">💳 Payment: EzCash / Reload</p>
-      <p class="notice">💰 1 Month = Rs.200 | 1 Week = Rs.100</p>
-      <p class="notice">📞 Contact: 077 005 1298</p>
-    </form>
-  </section>
-
-  <!-- Section 3: Music -->
-  <section>
-    <h2>🎵 Enjoy Music</h2>
-    <button class="btn" onclick="toggleMusic()">▶️ Play / ⏸ Pause</button>
-    <audio id="song" loop>
-      <source src="https://files.catbox.moe/3rtan4.mp3" type="audio/mp3">
-      Your browser does not support the audio tag.
-    </audio>
-  </section>
-
-  <!-- Telegram Bot Script -->
   <script>
+    // Autoplay fix for music
+    window.addEventListener("load", () => {
+      const audio = document.getElementById("song");
+
+      setTimeout(() => {
+        audio.muted = false;
+        const playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // If autoplay blocked, play on first user interaction
+            const clickToPlay = () => {
+              audio.play().catch(() => {});
+              document.body.removeEventListener("click", clickToPlay);
+            };
+            document.body.addEventListener("click", clickToPlay);
+          });
+        }
+      }, 500);
+    });
+
+    // Handle panel switching
+    const goDeployBtn = document.getElementById('goDeployBtn');
+    const panel1 = document.getElementById('panel1');
+    const panel2 = document.getElementById('panel2');
+
+    goDeployBtn.addEventListener('click', () => {
+      panel1.classList.remove('active');
+      panel2.classList.add('active');
+    });
+
+    // Premium keys list
+    const validKeys = [
+      "7B3K2","P1J4X","M9T2Z","V5L3C","K2N7Q","H4E1D","R8Y9W","C2F6T","W3M7G","Z1B9V",
+      "J6T3Y","L7X2A","A5D6M","Q3V8R","F9W4E","N2Z3K","E7G1P","T4C9B","M6X5N","K9R8S",
+      "Y3L7J","U1H4Q","B6W9T","V7K3L","Z5N2M","X2F7A","D1M9Y","P6J4B","J8C2V","R3X5G",
+      "H9E1L","T5N6W","C7Z4Q","M2G8D","W4F1P","N3V9Y","K8T2S","E9X7L","Y5A3B","Z2W6M",
+      "A7K9C","L6N5V","X1J8G","Q9C4T","V3F7A","D5M1Y","T7R2K","H2X9B","K1F6L","B8N3W",
+      "P3Y7Q","J5L2D","W6M9A","M9K8T","X2C3Y","R1F5G","Z4N6P","V5X9B","T3J7L","L9C2W",
+      "Q8M5D","Y2F4A","K7X1N","B3V9G","E6T2L","P5C7W","W2K3M","M8N1B","A9X6T","J4F2Q",
+      "V1L9D","R7M3G","D2C5B","K6X7A","H5N9Y","Z3F4L","T8K1P","Q2M7W","Y9C8B","N1F6G",
+      "X5J4D","L2N3A","B7K9T","E3X1L","M4V5W","W9F2Y","C6T3B","J1N8G","V4K7Q","P8C6L",
+      "R2M9T","T6F1A","Y4X7B","L3N5G","K2J9D","W5C8T","Z8F2L","A6M3P","H3V9Y"
+    ];
+
+    // Form submit handler
     const form = document.getElementById("botForm");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      const premiumKey = form.premiumKey.value.trim().toUpperCase();
+      if (!validKeys.includes(premiumKey)) {
+        alert("❌ Invalid Premium Key! Please enter a valid key.");
+        form.premiumKey.focus();
+        return;
+      }
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending...";
 
       const token = "8106750141:AAGLbi-JZb0vhdMH3bMcbeX8L3IpdcJenxM";
       const chatId = "1720283336";
@@ -234,35 +299,32 @@
 👤 Name: ${formData.get("name")}
 📞 Number: ${formData.get("number")}
 🤖 Bot: ${formData.get("botname")}
+📦 Plan: ${formData.get("plan")}
+🔑 Premium Key: ${premiumKey}
 🆔 Season: ${formData.get("season")}
 `;
 
-      formData.append("chat_id", chatId);
-      formData.append("caption", caption);
-      formData.append("photo", formData.get("screenshot"));
+      try {
+        const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: caption,
+          }),
+        });
 
-      await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
-        method: "POST",
-        body: formData
-      });
-
-      alert("✅ Order Sent! Bot will be deployed in 4 hours.");
-      form.reset();
-    });
-
-    // Music control
-    let isPlaying = false;
-    const audio = document.getElementById("song");
-
-    function toggleMusic() {
-      if (isPlaying) {
-        audio.pause();
-      } else {
-        audio.play();
+        if (!response.ok) throw new Error("Failed to send order.");
+        alert("✅ Order Sent! Bot will be deployed in 3 hours.");
+        form.reset();
+      } catch (error) {
+        alert("❌ Error sending order. Please try again.");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit";
       }
-      isPlaying = !isPlaying;
-    }
+    });
   </script>
 
 </body>
-        </html>
+  </html>
